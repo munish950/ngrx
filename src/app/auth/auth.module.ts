@@ -1,18 +1,15 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LoginComponent} from './login/login.component';
-import {MatCardModule} from "@angular/material/card";
-import { MatInputModule } from "@angular/material/input";
-import {RouterModule} from "@angular/router";
-import {ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
+import {MatCardModule} from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import {RouterModule} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
 import { StoreModule } from '@ngrx/store';
-import {AuthService} from "./auth.service";
-import * as fromAuth from './auth.reducer';
-import {AuthGuard} from './auth.guard';
-import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './auth.effects';
-
+import {AuthService} from './auth.service';
+// import { EffectsModule } from '@ngrx/effects';
+import {authReducer} from './reducers';
 
 @NgModule({
     imports: [
@@ -22,20 +19,18 @@ import { AuthEffects } from './auth.effects';
         MatInputModule,
         MatButtonModule,
         RouterModule.forChild([{path: '', component: LoginComponent}]),
-        StoreModule.forFeature('auth', fromAuth.authReducer),
-        EffectsModule.forFeature([AuthEffects]),
+        StoreModule.forFeature('auth', authReducer),
 
     ],
     declarations: [LoginComponent],
     exports: [LoginComponent]
 })
 export class AuthModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<AuthModule> {
         return {
             ngModule: AuthModule,
             providers: [
-              AuthService,
-              AuthGuard
+              AuthService
             ]
         }
     }

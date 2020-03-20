@@ -8,10 +8,17 @@ main {
 }
 
 .menu-button {
-    background: #607d8b;
+    background: rgba(255, 170, 0, 0.76);
     color: white;
     border: none;
     cursor:pointer;
     outline:none;
 }
+
+
+.spinner-container {
+  width: 100%;
+  margin-top: 100px;
+}
+
 

@@ -11,20 +11,11 @@ export function searchLessons(req: Request, res: Response) {
 
     console.log('Searching for lessons ...');
 
-//    const error = (Math.random() >= 0.5);
-
-//    if (error) {
-//        console.log("ERROR loading lessons!");
-//        res.status(500).json({message: 'random error occurred.'});
-//    }
-//    else {
-
-
         const queryParams = req.query;
 
         const courseId = queryParams.courseId,
             filter = queryParams.filter || '',
-            sortOrder = queryParams.sortOrder,
+            sortOrder = queryParams.sortOrder || 'asc',
             pageNumber = parseInt(queryParams.pageNumber) || 0,
             pageSize = parseInt(queryParams.pageSize);
 
@@ -40,15 +31,10 @@ export function searchLessons(req: Request, res: Response) {
 
         const initialPos = pageNumber * pageSize;
 
+        console.log(`Retrieving lessons page starting at position ${initialPos}, page size ${pageSize} for course ${courseId}`);
+
         const lessonsPage = lessons.slice(initialPos, initialPos + pageSize);
 
-        setTimeout(() => {
-            res.status(200).json({payload: lessonsPage});
-        },1000);
-
- //   }
-
-
-
+        res.status(200).json(lessonsPage);
 
 }

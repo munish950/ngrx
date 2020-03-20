@@ -1,7 +1,8 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {Course} from "../model/course";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import {CourseDialogComponent} from "../course-dialog/course-dialog.component";
+import {EditCourseDialogComponent} from "../edit-course-dialog/edit-course-dialog.component";
+import {defaultDialogConfig} from '../shared/default-dialog-config';
 
 @Component({
     selector: 'courses-card-list',
@@ -13,7 +14,11 @@ export class CoursesCardListComponent implements OnInit {
     @Input()
     courses: Course[];
 
-    constructor(private dialog: MatDialog) {
+    @Output()
+    courseChanged = new EventEmitter();
+
+    constructor(
+      private dialog: MatDialog ) {
     }
 
     ngOnInit() {
@@ -22,19 +27,24 @@ export class CoursesCardListComponent implements OnInit {
 
     editCourse(course:Course) {
 
-        const dialogConfig = new MatDialogConfig();
+        const dialogConfig = defaultDialogConfig();
 
-        dialogConfig.disableClose = true;
-        dialogConfig.autoFocus = true;
-        dialogConfig.width = '400px';
+        dialogConfig.data = {
+          dialogTitle:"Edit Course",
+          course,
+          mode: 'update'
+        };
 
-        dialogConfig.data = course;
-
-        const dialogRef = this.dialog.open(CourseDialogComponent,
-            dialogConfig);
-
+        this.dialog.open(EditCourseDialogComponent, dialogConfig)
+          .afterClosed()
+          .subscribe(() => this.courseChanged.emit());
 
     }
+
+  onDeleteCourse(course:Course) {
+
+
+  }
 
 }
 

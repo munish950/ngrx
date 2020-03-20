@@ -9,14 +9,10 @@ import {Lesson} from "../model/lesson";
 
 
 @Injectable()
-export class CoursesService {
+export class CoursesHttpService {
 
     constructor(private http:HttpClient) {
 
-    }
-
-    findCourseById(courseId: number): Observable<Course> {
-        return this.http.get<Course>(`/api/courses/${courseId}`);
     }
 
     findAllCourses(): Observable<Course[]> {
@@ -26,35 +22,26 @@ export class CoursesService {
             );
     }
 
-    findAllCourseLessons(courseId:number): Observable<Lesson[]> {
-        return this.http.get('/api/lessons', {
-            params: new HttpParams()
-                .set('courseId', courseId.toString())
-                .set('pageNumber', "0")
-                .set('pageSize', "1000")
-        }).pipe(
-            map(res =>  res["payload"])
-        );
+    findCourseByUrl(courseUrl: string): Observable<Course> {
+      return this.http.get<Course>(`/api/courses/${courseUrl}`);
     }
 
     findLessons(
         courseId:number,
         pageNumber = 0, pageSize = 3):  Observable<Lesson[]> {
 
-        return this.http.get('/api/lessons', {
+        return this.http.get<Lesson[]>('/api/lessons', {
             params: new HttpParams()
                 .set('courseId', courseId.toString())
                 .set('sortOrder', 'asc')
                 .set('pageNumber', pageNumber.toString())
                 .set('pageSize', pageSize.toString())
-        }).pipe(
-            map(res =>  res["payload"])
-        );
+        });
     }
 
 
-    saveCourse(courseId: number, changes: Partial<Course>) {
-        return this.http.put('/api/courses/' + courseId, changes);
+    saveCourse(courseId: number | string, changes: Partial<Course>) {
+        return this.http.put('/api/course/' + courseId, changes);
     }
 
 

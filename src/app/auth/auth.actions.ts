@@ -1,30 +1,12 @@
-import { Action } from '@ngrx/store';
-import {User} from '../model/user.model';
+import { createAction, props } from '@ngrx/store';
+import { User } from './model/user.model';
 
 
+export const login = createAction(
+    '[Login Page] User Login',
+    props<{user: User}>()
+);
 
-export enum AuthActionTypes {
-  LoginAction = '[Login] Action',
-  LogoutAction = '[Logout] Action',
-}
-
-
-export class Login implements Action {
-
-  readonly type = AuthActionTypes.LoginAction;
-
-  constructor(public payload: {user: User}) {
-
-  }
-}
-
-
-export class Logout implements Action {
-
-  readonly type = AuthActionTypes.LogoutAction;
-
-
-}
-
-
-export type AuthActions = Login | Logout;
+export const logout = createAction(
+    '[Logout] User Logout'
+);
