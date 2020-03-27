@@ -19,6 +19,10 @@ export const courseReducer = createReducer(
     initialCourseState,
     on(coursesAction.allCoursesLoaded,
         (state, action) => adapter.addAll(action.courses, {...state, allCoursesLoadedFlag: true})
+    ),
+
+    on(coursesAction.updateCourse,
+        (state, action) => adapter.updateOne(action.update, state)
     )
 );
 

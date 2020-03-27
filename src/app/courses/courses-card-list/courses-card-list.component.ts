@@ -25,7 +25,7 @@ export class CoursesCardListComponent implements OnInit {
 
     }
 
-    editCourse(course:Course) {
+    editCourse(course: Course) {
 
         const dialogConfig = defaultDialogConfig();
 
