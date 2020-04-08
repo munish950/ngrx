@@ -25,11 +25,14 @@ import { EntityDataService, EntityDefinitionService, EntityMetadataMap} from '@n
 import {compareCourses, Course} from './model/course';
 
 import {compareLessons, Lesson} from './model/lesson';
-import { CoursesResolver } from './course/courses.resolver';
+import { CoursesResolver } from './courses.resolver';
 import { courseReducer } from './reducers/course.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { CourseEffects } from './course.effects';
 import { StoreModule } from '@ngrx/store';
+import { LessonResolver } from './course/store/lesson.resolver';
+import { LessonReducer } from './course/store/lesson.reducer';
+import { LessonEffects } from './course/store/lesson.effects';
 
 
 export const coursesRoutes: Routes = [
@@ -43,7 +46,10 @@ export const coursesRoutes: Routes = [
   },
   {
     path: ':courseUrl',
-    component: CourseComponent
+    component: CourseComponent,
+    resolve: {
+      lessons: LessonResolver
+    }
   }
 ];
 
@@ -67,8 +73,9 @@ export const coursesRoutes: Routes = [
     MatMomentDateModule,
     ReactiveFormsModule,
     RouterModule.forChild(coursesRoutes),
-    EffectsModule.forFeature([CourseEffects]),
-    StoreModule.forFeature('courses', courseReducer)
+    EffectsModule.forFeature([CourseEffects, LessonEffects]),
+    StoreModule.forFeature('courses', courseReducer),
+    StoreModule.forFeature('lessons', LessonReducer)
   ],
   declarations: [
     HomeComponent,
@@ -85,7 +92,8 @@ export const coursesRoutes: Routes = [
   entryComponents: [EditCourseDialogComponent],
   providers: [
     CoursesHttpService,
-    CoursesResolver
+    CoursesResolver,
+    LessonResolver
   ]
 })
 export class CoursesModule {

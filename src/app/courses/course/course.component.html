@@ -44,8 +44,12 @@
 
   </mat-table>
 
-
+  <!--
   <button class="bottom-toolbar" mat-raised-button color="accent"
           (click)="loadLessonsPage(course)">Load More</button>
-
+  -->
+  <mat-paginator [length]="length"
+                [pageSize]="pageSize"             
+               (page)="pageEvent = getServerData($event)">               
+  </mat-paginator>
 </div>

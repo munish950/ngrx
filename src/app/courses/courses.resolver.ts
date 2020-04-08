@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { tap, first, finalize, filter } from 'rxjs/operators';
-import { loadAllCourses } from '../course.actions';
-import { areCousesLoaded } from '../course.selectors';
+import { loadAllCourses } from './course.actions';
+import { areCousesLoaded } from './course.selectors';
 
 @Injectable()
 export class CoursesResolver implements Resolve<any> {

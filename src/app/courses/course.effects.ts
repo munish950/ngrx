@@ -31,5 +31,5 @@ export class CourseEffects {
                     )
             ),
             {dispatch: false}
-    )
+    );
 }
