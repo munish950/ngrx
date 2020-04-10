@@ -11,5 +11,8 @@ const getAllLessons = createSelector(
 
 export const getCourseLessons = createSelector(
     getAllLessons,
-    (allLessons, props) => allLessons[props.courseId]
+    (allLessons, props) => {
+        const state = allLessons[props.courseId];
+        return state ? state.lessons : [];
+    }
 );

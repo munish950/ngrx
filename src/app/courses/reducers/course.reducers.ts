@@ -26,5 +26,5 @@ export const courseReducer = createReducer(
     )
 );
 
-export const {selectAll} = adapter.getSelectors();
+export const {selectEntities, selectAll} = adapter.getSelectors();
 

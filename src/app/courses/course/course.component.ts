@@ -4,10 +4,11 @@ import {Course} from '../model/course';
 import {Observable} from 'rxjs';
 import {Lesson} from '../model/lesson';
 import {concatMap, delay, filter, first, map, shareReplay, tap, withLatestFrom, switchMap} from 'rxjs/operators';
-import {CoursesHttpService} from '../services/courses-http.service';
+// import {CoursesHttpService} from '../services/courses-http.service';
 import { LessonState } from './store/lesson.state';
 import { Store, select } from '@ngrx/store';
 import { getCourseLessons } from './store/lesson.selectors';
+import { getCoursebyId } from '../course.selectors';
 
 
 @Component({
@@ -29,29 +30,30 @@ export class CourseComponent implements OnInit {
   courseId: number;
 
   constructor(
-    private coursesService: CoursesHttpService,
+    // private coursesService: CoursesHttpService,
     private route: ActivatedRoute,
-    private store: Store<LessonState>
+    private store: Store<any>
     ) { }
 
   ngOnInit() {
     // const courseId = this.route.snapshot.paramMap.get('courseUrl');
 
     const courseId$ = this.route.params.pipe(
-      map(params => params['courseUrl']),
+      map(params => params['courseUrl'])
+    );
+    /*
+    this.store.pipe(
+
+    );
+    */
+
+    this.course$ = courseId$.pipe(
+      switchMap(id => this.store.pipe(select(getCoursebyId, { id : id })))
     );
 
     this.lessons$ = courseId$.pipe(
         switchMap(id => this.store.pipe(select(getCourseLessons, { courseId: id })))
     );
-
-    
-    /*
-    this.course$ = this.store.pipe(
-      // Need to select Course id of current course
-    );
-    */
-
   }
 
 

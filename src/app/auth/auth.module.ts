@@ -21,7 +21,8 @@ import { AuthEffects } from './auth.effects';
         MatCardModule,
         MatInputModule,
         MatButtonModule,
-        RouterModule.forChild([{path: '', component: LoginComponent}]),
+        // RouterModule.forChild([{path: '', component: LoginComponent}]),
+        RouterModule.forChild([{path: '', redirectTo: 'courses', pathMatch: 'full'}]),
         StoreModule.forFeature('auth', authReducer),
         EffectsModule.forFeature([AuthEffects])
     ],

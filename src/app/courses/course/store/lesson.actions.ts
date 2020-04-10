@@ -32,3 +32,8 @@ export const loadedCoursePreviousLessons = createAction(
     '[Lesson] Loaded Course Previous Lessons',
     props<{courseId: number}>()
 );
+
+export const courseLessonsError = createAction(
+    '[Error] Load Lessons Error',
+    props<{error: string}>()
+);

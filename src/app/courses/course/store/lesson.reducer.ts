@@ -14,7 +14,8 @@ export const LessonReducer = createReducer(
     on (LessonActionType.courseLessonsLoaded,
         (state, action) => {
             const course = state[action.courseId] || {};
-            const lessons = course.lessons || [];
+            // const lessons = course.lessons || [];
+            const lessons = course['lessons'] || [];
             return {
              ...state,
              [action.courseId]: {
