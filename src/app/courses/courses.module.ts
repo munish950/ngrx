@@ -30,7 +30,7 @@ import { courseReducer } from './reducers/course.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { CourseEffects } from './course.effects';
 import { StoreModule } from '@ngrx/store';
-import { LessonResolver } from './course/store/lesson.resolver';
+// import { LessonResolver } from './course/store/lesson.resolver';
 import { LessonReducer } from './course/store/lesson.reducer';
 import { LessonEffects } from './course/store/lesson.effects';
 
@@ -47,9 +47,6 @@ export const coursesRoutes: Routes = [
   {
     path: ':courseUrl',
     component: CourseComponent,
-    resolve: {
-      lessons: LessonResolver
-    }
   }
 ];
 
@@ -93,7 +90,7 @@ export const coursesRoutes: Routes = [
   providers: [
     CoursesHttpService,
     CoursesResolver,
-    LessonResolver
+    // LessonResolver
   ]
 })
 export class CoursesModule {

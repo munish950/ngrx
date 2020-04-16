@@ -3,8 +3,8 @@ import { Lesson } from '../../model/lesson';
 
 export const loadCourseLessons = createAction(
     '[Lesson] Load Course Lessons',
-    //props<{courseId: number, pageSize: number, pageIndex: number}>()
-    props<{courseId: number}>()
+    // props<{courseId: number, pageSize: number, pageIndex: number}>()
+    props<{courseId: number, pageSize: number, pageIndex: number}>()
 );
 
 export const courseLessonsLoaded = createAction(
@@ -15,7 +15,7 @@ export const courseLessonsLoaded = createAction(
 
 export const loadCourseNextLessons = createAction(
     '[Lesson] Load Course Next Lessons',
-    props<{courseId: number}>()
+    props<{courseId: number, pageSize: number, pageIndex: number}>()
 );
 
 export const loadedCourseNextLessons = createAction(

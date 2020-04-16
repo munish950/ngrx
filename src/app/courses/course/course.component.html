@@ -50,6 +50,6 @@
   -->
   <mat-paginator [length]="length"
                 [pageSize]="pageSize"             
-               (page)="pageEvent = getServerData($event)">               
+               (page)="pageEvent = loadLessonsPage($event)">               
   </mat-paginator>
 </div>

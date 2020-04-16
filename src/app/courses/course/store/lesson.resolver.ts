@@ -18,7 +18,9 @@ export class LessonResolver implements Resolve<any> {
         const courseId = route.paramMap.get('courseUrl');
         this.store.dispatch(LessonActionType.loadCourseLessons(
             {
-                courseId: Number(courseId)
+                courseId: Number(courseId),
+                pageSize: 3,
+                pageIndex: 0
             }
         ));
         return of(true);

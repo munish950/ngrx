@@ -9,6 +9,8 @@ import { LessonState } from './store/lesson.state';
 import { Store, select } from '@ngrx/store';
 import { getCourseLessons } from './store/lesson.selectors';
 import { getCoursebyId } from '../course.selectors';
+import { LessonActionType } from './store/lesson.action.types';
+
 
 
 @Component({
@@ -25,7 +27,7 @@ export class CourseComponent implements OnInit {
   displayedColumns = ['seqNo', 'description', 'duration'];
 
   nextPage = 0;
-  length: 10;
+  length = 10;
   pageSize = 3;
   courseId: number;
 
@@ -48,17 +50,48 @@ export class CourseComponent implements OnInit {
     */
 
     this.course$ = courseId$.pipe(
-      switchMap(id => this.store.pipe(select(getCoursebyId, { id : id })))
+      switchMap(id => {
+        this.courseId = id;
+        // this.lessons$ = this.store.pipe(select(getCourseLessons, { courseId: id }));
+        this.store.dispatch(LessonActionType.loadCourseLessons({
+            courseId: this.courseId,
+            pageSize: 3,
+            pageIndex: 0
+          })
+        );
+        this.lessons$ = this.store.pipe(select(getCourseLessons, { courseId: id }));
+        return this.store.pipe(select(getCoursebyId, { id : id }));
+      })
     );
-
+    /*
     this.lessons$ = courseId$.pipe(
         switchMap(id => this.store.pipe(select(getCourseLessons, { courseId: id })))
     );
+    */
+
   }
 
 
-  loadLessonsPage(course: Course) {
+  loadLessonsPage(event: {
+    previousPageIndex: number,
+    pageIndex: number,
+    pageSize: number,
+    length: number
+    }) {
+    console.log(event);
+    const previousPageIndex = event.previousPageIndex;
+    const length = event.length;
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
 
+    this.store.dispatch(LessonActionType.loadCourseLessons({
+        courseId: this.courseId,
+        pageSize: pageSize,
+        pageIndex: pageIndex
+      })
+    );
   }
 
 }
+
+

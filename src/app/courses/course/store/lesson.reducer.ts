@@ -17,21 +17,21 @@ export const LessonReducer = createReducer(
             // const lessons = course.lessons || [];
             const lessons = course['lessons'] || [];
             return {
-             ...state,
-             [action.courseId]: {
+                ...state,
+                [action.courseId]: {
                 // lessons: [action.lessons],
-                lessons: [
-                    ...lessons,
-                    ...action.lessons,
-                ],
-                pagination: {
-                    pageSize: 3,
-                    pageIndex: 0,
-                    length: 10
-                }
+                    lessons: [
+                        ...lessons,
+                        ...action.lessons,
+                    ],
+                    pagination: {
+                        pageSize: 3,
+                        pageIndex: 0,
+                        length: 10
+                    }
                 }
             };
         }
-    ),
+    )
 );
 

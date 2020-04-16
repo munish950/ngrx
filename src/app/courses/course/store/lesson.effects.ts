@@ -9,12 +9,14 @@ import { of } from 'rxjs';
 @Injectable()
 export class LessonEffects {
 
-    constructor(private actions$: Actions, private httpService: CoursesHttpService){}
+    constructor(private actions$: Actions, private httpService: CoursesHttpService) {}
 
     loadLessons$ = createEffect(
         () => this.actions$.pipe(
             ofType(LessonActionType.loadCourseLessons),
-            concatMap(action => this.httpService.findLessons(action.courseId, 0, 3)
+            concatMap(action => this.httpService.findLessons(
+                    action.courseId, action.pageIndex, action.pageSize
+                )
                 .pipe(
                     map(
                         lessons => LessonActionType.courseLessonsLoaded(
@@ -30,6 +32,14 @@ export class LessonEffects {
             )
         )
     );
+    /*
+    $loadPageLessons = createEffects(
+        () => this.actions$.pipe(
+            ofType(LessonActionType.loadCourseNextLessons),
+            concatMap(action => this.httpService.find)
+        )
+    )
+    */
 
     error$ = createEffect(
         () => this.actions$.pipe(
