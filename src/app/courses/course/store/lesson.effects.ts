@@ -24,7 +24,7 @@ export class LessonEffects {
                         ),
                         catchError((error) => {
                                 // LessonActionType.courseLessonsError({error: error});
-                                return of(LessonActionType.courseLessonsError({error: error}));
+                                return of(LessonActionType.courseLessonsError({error: 'My Error'}));
                             }
                         )
                     )
@@ -50,6 +50,6 @@ export class LessonEffects {
             )
         ),
         {dispatch: false}
-    )
+    );
 
 }
